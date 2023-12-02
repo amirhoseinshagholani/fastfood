@@ -1,16 +1,52 @@
+import Loading from "../Loading/loading";
 import axios from "../axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-const CategoryList = ()=>{
-    useEffect(()=>{
-        const fetchCategories = async () =>{
+const CategoryList = () => {
+    const [loading, setLoading] = useState(true);
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
             const response = await axios.get('/FoodCategory/categories');
-            console.log(response.data);
+            setCategories(response.data);
+            setLoading(false);
         }
         fetchCategories();
-    },[]);
-    return(
-        <div><h1>Category List</h1></div>
+    }, []);
+
+    const renderContent = () => {
+        if (loading) {
+            return <Loading/>
+        } else {
+            return(
+                <ul className="nav">
+                    <li className="nav-item">
+                        <a className="nav-link" href="#">
+                            همه فست فود ها
+                        </a>
+                    </li>
+                    {
+                        categories.map(category => (
+                            <li className="nav-item">
+                                <a className="nav-link" href="#">
+                                    {category.name}
+                                </a>
+                            </li>
+                        ))
+                    }
+                </ul>
+            )
+        }
+    }
+
+
+    return (
+        <nav className="container mt-n5">
+            <div className="d-flex align-items-center bg-white rounded-3 shadow-lg py-4" style={{ height: "80px" }}>
+                {renderContent()}
+            </div>
+        </nav>
     )
 }
 
