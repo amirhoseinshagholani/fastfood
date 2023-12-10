@@ -45,10 +45,10 @@ function App() {
     if(fastFoodItem.length==0 && isSearch==true){
       return(
       <>
-        <div className='alert alert-warning text-center'>
+        <div className='alert alert-warning text-center fade-in-horiz'>
           موردی یافت نشد
         </div>
-        <img className='mx-auto mt-5 d-block' width="600" height="400" src={notFound}></img>
+        <img className='mx-auto mt-5 d-block fade-in-horiz' width="600" height="400" src={notFound}></img>
       </>
       )
     }else{
