@@ -1,8 +1,9 @@
 import Loading from "../Loading/loading";
+import SearchBar from "../SearchBar/searchBar";
 import axios from "../axios";
 import { useEffect, useState } from "react";
 
-const CategoryList = () => {
+const CategoryList = ({ filterItems,children}) => {
     const [loading, setLoading] = useState(true);
     const [categories, setCategories] = useState([]);
 
@@ -17,25 +18,28 @@ const CategoryList = () => {
 
     const renderContent = () => {
         if (loading) {
-            return <Loading/>
+            return <Loading />
         } else {
-            return(
-                <ul className="nav">
-                    <li className="nav-item">
-                        <a className="nav-link" href="#">
-                            همه فست فود ها
-                        </a>
-                    </li>
-                    {
-                        categories.map(category => (
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">
-                                    {category.name}
-                                </a>
-                            </li>
-                        ))
-                    }
-                </ul>
+            return (
+                <div className="ps-3 w-100 d-flex align-items-center justify-content-between gap-5">
+                    <ul className="nav">
+                        <li className="nav-item" onClick={() => filterItems()}>
+                            <a className="nav-link" href="#">
+                                همه فست فود ها
+                            </a>
+                        </li>
+                        {
+                            categories.map(category => (
+                                <li className="nav-item" onClick={() => filterItems(category.id)}>
+                                    <a className="nav-link" href="#">
+                                        {category.name}
+                                    </a>
+                                </li>
+                            ))
+                        }
+                    </ul>
+                    {children}
+                </div>
             )
         }
     }
